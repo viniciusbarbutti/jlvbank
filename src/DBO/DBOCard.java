@@ -11,6 +11,7 @@ public class DBOCard {
     private String brand;
     private String owner;
     private String classification;
+    private boolean status;
 
     public int getId() {
         return id;
@@ -75,6 +76,26 @@ public class DBOCard {
     public void setClassification(String classification) {
         this.classification = classification;
     }
-    
-    
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String toString() {
+        return "DBOCard{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", securityNumber='" + securityNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", dueDate=" + dueDate +
+                ", brand='" + brand + '\'' +
+                ", owner='" + owner + '\'' +
+                ", classification='" + classification + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

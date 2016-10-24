@@ -32,10 +32,4 @@ public class DAOCard {
             e.printStackTrace();
         }
     }
-
-    public int getIdCustomer(String cpf)throws Exception{
-        int idCustomer = 0;
-
-        return idCustomer;
-    }
 }

@@ -5,8 +5,8 @@ import java.sql.*;
 public class DAOCustomer {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/jlvbank";
-    private static final String USER = "";
-    private static final String PASSWORD = "";
+    private static final String USER = "bank";
+    private static final String PASSWORD = "bank123";
 
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -34,26 +34,31 @@ public class DAOCustomer {
         }
     }
 
+    /*return is 0, customer didn't found*/
     public int selectId(String cpf){
         int idCustomer = 0;
         try{
+
             if(connection == null)
                 prepareConnection();
+
             String query = "SELECT id FROM customers WHERE cpf = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, cpf);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
                 do{
                     idCustomer = resultSet.getInt("id");
                 }while(resultSet.next());
-            }else{
-
+            }
+            else{
+                return idCustomer;
             }
         }
         catch (SQLException e){
-
+            e.getMessage();
         }
 
         return idCustomer;

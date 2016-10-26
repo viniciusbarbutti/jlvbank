@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
 @WebServlet(name = "Cards", urlPatterns = {"/Cards"})
 public class Cards extends HttpServlet {
@@ -20,10 +20,12 @@ public class Cards extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            Gson gson = new Gson();
+            DAOCustomer daoCustomer = new DAOCustomer();
+            DBOCustomer dboCustomer = daoCustomer.authenticCustomer("12345678011", "vini");
+//            Gson gson = new Gson();
 
             PrintWriter out = response.getWriter();
-            out.print(gson.toJson(""));
+            out.print(dboCustomer);
         }
         catch (Exception e){
             e.getMessage();

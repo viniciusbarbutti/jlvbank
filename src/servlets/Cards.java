@@ -1,6 +1,7 @@
 package servlets;
 
-import DAO.DAOCard;
+import DAO.DAOCustomer;
+import DBO.DBOCustomer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,32 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import com.google.gson.Gson;
 
 @WebServlet(name = "Cards", urlPatterns = {"/Cards"})
 public class Cards extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAOCard daoCard = new DAOCard();
-        PrintWriter out = response.getWriter();
-        out.print("servletok");
-        try{
-            int idCustomer  = daoCard.getIdCustomer("12345678011");
 
-            out.print(idCustomer);
-        }
-        catch (Exception e){}
    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAOCard daoCard = new DAOCard();
-        PrintWriter out = response.getWriter();
-
         try{
-            int idCustomer  = daoCard.getIdCustomer("12345678011");
+            Gson gson = new Gson();
 
-            out.print(idCustomer);
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(""));
         }
         catch (Exception e){
-            out.print(e);
+            e.getMessage();
         }
 
     }

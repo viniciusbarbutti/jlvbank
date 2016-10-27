@@ -78,4 +78,23 @@ public class DAOCard {
         }
         return  cards;
     }
+
+    public Boolean blockCard(String number){
+        if(connection == null)
+            prepareConnection();
+        try{
+            String query = "UPDATE cards SET status = 0 WHERE num = ?";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, number);
+
+            int i = preparedStatement.executeUpdate();
+            if(i > 0)
+                return true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

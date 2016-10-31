@@ -48,9 +48,10 @@ public class DAOCard {
                     "join brands brand on card.fk_brand = brand.id\n" +
                     "join customers cust on cust.id = card.fk_owner\n" +
                     "join classification cla on cla.id = card.fk_classification\n" +
-                    "where cust.cpf = '12345678011';";
+                    "where cust.cpf = ?;";
 
             preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, cpf);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){

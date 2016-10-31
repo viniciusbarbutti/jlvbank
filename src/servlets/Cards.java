@@ -4,6 +4,7 @@ import DAO.DAOCard;
 import DAO.DAOCustomer;
 import DBO.DBOCard;
 import DBO.DBOCustomer;
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +23,7 @@ public class Cards extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
+            Gson gson = new Gson();
 
         }
         catch (Exception e){

@@ -36,38 +36,46 @@ public class DAOInvoice {
             e.printStackTrace();
         }
     }
-
-    public ArrayList<DBORelease> selectInvoice (int invoice) {
+    //TODO: test
+    public ArrayList<DBORelease> selectReleases (int idInvoice) {
         ArrayList<DBORelease> releases = null;
+
         if(connection == null)
             prepareConnection();
+
         try{
-            String query = "select rl.id, rl.value, trl.`type`,rl.description, rl.date\n" +
-                    "from releases rl\n" +
-                    "join type_releases trl on rl.fk_type = trl.id\n" +
-                    "where fk_invoice = ?;";
+            String query = "select r.id, r.value, tr.`type`, r.description, r.date from releases r \n" +
+                           "join type_releases tr on r.fk_type = tr.id\n" +
+                           "where fk_invoice = ?\n";
 
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, invoice);
+            preparedStatement.setInt(1, idInvoice);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
                 releases = new ArrayList<>();
+
                 DBORelease dboRelease = new DBORelease();
+
                 do{
                     dboRelease.setId(resultSet.getInt("id"));
                     dboRelease.setValue(resultSet.getDouble("value"));
-                    dboRelease.setType(resultSet.getString("type"));
+                    dboRelease.setType(resultSet.getString("tr.type"));
                     dboRelease.setDescription(resultSet.getString("description"));
                     dboRelease.setDate(resultSet.getDate("date"));
+                    dboRelease.setInvoice(idInvoice);
+
+                    releases.add(dboRelease);
                 }while(resultSet.next());
 
             }else
                 return releases;
+
         }catch (Exception e){
             e.getStackTrace();
         }
+
         return releases;
     }
 
@@ -78,18 +86,20 @@ public class DAOInvoice {
             prepareConnection();
 
         try{
-            String query ="select invoice.id, invoice.valeu, invoice.bar_code, card.num, invoice.start_date, invoice.end_date, invoice.due_date, invoice.paid\n" +
-                    "from invoices invoice\n" +
-                    "join cards card on card.id = fk_card\n" +
-                    "where card.num = ?;";
+            String query = "select invoice.id, invoice.valeu, invoice.bar_code, card.num, invoice.start_date, invoice.end_date, invoice.due_date, invoice.paid\n" +
+                           "from invoices invoice\n" +
+                           "join cards card on card.id = fk_card\n" +
+                           "where card.num = ?;";
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, cardNumber);
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
                 invoices = new ArrayList<>();
                 DBOInvoice dboInvoice = new DBOInvoice();
+
                 do{
                     dboInvoice.setId(resultSet.getInt("id"));
                     dboInvoice.setValue(resultSet.getDouble("valeu"));
@@ -99,13 +109,17 @@ public class DAOInvoice {
                     dboInvoice.setEndDate(resultSet.getDate("end_date"));
                     dboInvoice.setDueDate(resultSet.getDate("due_date"));
                     dboInvoice.setPaid(resultSet.getBoolean("paid"));
-                    dboInvoice.setReleases(selectInvoice(dboInvoice.getId()));
+                    dboInvoice.setReleases(selectReleases(dboInvoice.getId()));
+
+                    invoices.add(dboInvoice);
                 }while (resultSet.next());
             }else
                 return invoices;
-        }catch (Exception e){
+
+        }catch (Exception e) {
             e.getStackTrace();
         }
+
         return invoices;
     }
 }

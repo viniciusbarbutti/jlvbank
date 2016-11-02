@@ -37,7 +37,10 @@ public class DAOCard {
     }
 
 
-    public ArrayList<DBOCard> selectAllCards(String cpf){
+    public ArrayList<DBOCard> selectAllCards(String cpf) throws Exception{
+        if(cpf == null)
+            throw new Exception("cpf number can't be null");
+
         ArrayList<DBOCard> cards = null;
 
         if(connection == null)

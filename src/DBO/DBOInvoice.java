@@ -1,5 +1,6 @@
 package DBO;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DBOInvoice {
@@ -11,6 +12,15 @@ public class DBOInvoice {
     private Date endDate;
     private Date dueDate;
     private boolean paid;
+    private ArrayList<DBORelease> releases;
+
+    public ArrayList<DBORelease> getReleases() {
+        return releases;
+    }
+
+    public void setReleases(ArrayList<DBORelease> releases) {
+        this.releases = releases;
+    }
 
     public int getId() {
         return id;

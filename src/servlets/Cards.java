@@ -11,27 +11,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.ArrayList;
 
 @WebServlet(name = "Cards", urlPatterns = {"/Cards"})
 public class Cards extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String cpf = request.getHeader("cpf");
-
         try {
-            DAOCard daoCard = new DAOCard();
-            ArrayList<DBOCard> cards = daoCard.selectAllCards(cpf);
-
             PrintWriter out = response.getWriter();
+            Reader in = request.getReader();
 
-            //TODO: talk with Leoni
-            if (cards == null)
-                out.print("error");
+            response.setHeader("Content-Type", "application/json");
+            Gson gson = new Gson();
 
-            else {
-                Gson gson = new Gson();
+            String cpf = request.getHeader("cpf");
 
-                out.print(gson.toJson(cards));
+            if(cpf.length() != 11)
+                out.print("1");
+
+            else{
+                DAOCard daoCard = new DAOCard();
+                ArrayList<DBOCard> cards = daoCard.selectAllCards(cpf);
+
+                if (cards == null)
+                    out.print("3");
+
+                else
+                    out.print(gson.toJson(cards));
             }
 
         } catch (Exception e) {

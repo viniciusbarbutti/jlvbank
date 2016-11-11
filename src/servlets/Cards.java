@@ -19,26 +19,19 @@ public class Cards extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             PrintWriter out = response.getWriter();
-            Reader in = request.getReader();
-
-            response.setHeader("Content-Type", "application/json");
-            Gson gson = new Gson();
-
             String cpf = request.getHeader("cpf");
 
-            if(cpf.length() != 11)
+            response.setHeader("Content-Type", "application/json");
+
+            DAOCard daoCard = new DAOCard();
+            ArrayList<DBOCard> cards = daoCard.selectAllCards(cpf);
+
+            if (cards == null){
                 out.print("1");
-
-            else{
-                DAOCard daoCard = new DAOCard();
-                ArrayList<DBOCard> cards = daoCard.selectAllCards(cpf);
-
-                if (cards == null)
-                    out.print("3");
-
-                else
-                    out.print(gson.toJson(cards));
+                return ;
             }
+            Gson gson = new Gson();
+            out.print(gson.toJson(cards));
 
         } catch (Exception e) {
             e.getStackTrace();

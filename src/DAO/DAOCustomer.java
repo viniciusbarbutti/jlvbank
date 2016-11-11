@@ -35,34 +35,35 @@ public class DAOCustomer {
         }
     }
 
-    /*return is 0, customer didn't found*/
-    public int selectId(String cpf){
-        int idCustomer = 0;
-        try{
+    public boolean authenticCustomerRequest (String cpf, String pass){
+        boolean authentic = false;
 
+        try{
             if(connection == null)
                 prepareConnection();
 
-            String query = "SELECT id FROM customers WHERE cpf = ?";
-            preparedStatement = connection.prepareStatement(query);
+            String query = "SELECT COUNT(*) FROM customers WHERE cpf = ? AND password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
             preparedStatement.setString(1, cpf);
+            preparedStatement.setString(2, pass);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
-                do{
-                    idCustomer = resultSet.getInt("id");
-                }while(resultSet.next());
-            }
-            else{
-                return idCustomer;
+                if(resultSet.getInt("count(*)") == 1)
+                    return true;
+                else
+                    return false;
+            }else{
+                return false;
             }
         }
         catch (SQLException e){
             e.getMessage();
         }
 
-        return idCustomer;
+        return false;
     }
 
     public DBOCustomer authenticCustomer (String cpf, String pass){

@@ -83,18 +83,48 @@ public class DAOCard {
         return  cards;
     }
 
-    public Boolean blockCard(String number){
+    public Boolean blockCard(String numCard){
+        if(!statusCard(numCard))
+            return false;
+
         if(connection == null)
             prepareConnection();
+
         try{
             String query = "UPDATE cards SET status = 0 WHERE num = ?";
 
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, number);
+            preparedStatement.setString(1, numCard);
 
             int i = preparedStatement.executeUpdate();
             if(i > 0)
                 return true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean statusCard(String numCard){
+        if(connection == null)
+            prepareConnection();
+
+        try{
+            String query = "SELECT status FROM cards WHERE num = ?";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, numCard);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                if(resultSet.getBoolean("status"))
+                    return true;
+                else
+                    return false;
+            }
+                return false;
 
         }catch (Exception e){
             e.printStackTrace();

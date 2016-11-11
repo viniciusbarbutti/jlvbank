@@ -1,6 +1,7 @@
 package servlets;
 
 import DAO.DAOCard;
+import DAO.DAOCustomer;
 import DBO.DBOCard;
 import com.google.gson.Gson;
 
@@ -14,20 +15,37 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 
-@WebServlet(name = "Cards", urlPatterns = {"/Cards"})
-public class Cards extends HttpServlet {
+@WebServlet(name = "allCards", urlPatterns = {"/allCards"})
+public class allCards extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             PrintWriter out = response.getWriter();
-            String cpf = request.getHeader("cpf");
-
             response.setHeader("Content-Type", "application/json");
+
+            String cpf = request.getHeader("cpf");
+            if (cpf == null) {
+                out.print(1001);
+                return ;
+            }
+
+            String password = request.getHeader("password");
+            if (password == null) {
+                out.print(1001);
+                return ;
+            }
+
+            DAOCustomer daoCustomer = new DAOCustomer();
+
+            if (!daoCustomer.authenticCustomerRequest(cpf, password)){
+                out.print(1001);
+                return ;
+            }
 
             DAOCard daoCard = new DAOCard();
             ArrayList<DBOCard> cards = daoCard.selectAllCards(cpf);
 
             if (cards == null){
-                out.print("1");
+                out.print(1002);
                 return ;
             }
             Gson gson = new Gson();

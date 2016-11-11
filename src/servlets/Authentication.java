@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "Servlet Authentication", urlPatterns = {"/Authentication"})
-public class ServletAuthentication extends HttpServlet {
+public class Authentication extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

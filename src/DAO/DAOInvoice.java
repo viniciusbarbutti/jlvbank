@@ -36,7 +36,7 @@ public class DAOInvoice {
             e.printStackTrace();
         }
     }
-    //TODO: test
+
     public ArrayList<DBORelease> selectReleases (int idInvoice) {
         ArrayList<DBORelease> releases = null;
 

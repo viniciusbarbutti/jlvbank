@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class DAOInvoice {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/JLVbank";
-    private static final String USER = "jlvbank";
-    private static final String PASSWORD = "bank123";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/jlvbank";
+    private static final String USER = "jsimoni";
+    private static final String PASSWORD = "minamimo";
 
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;

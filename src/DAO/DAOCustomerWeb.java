@@ -4,7 +4,10 @@ import DBO.DBOCustomer;
 
 import java.sql.*;
 
-public class DAOCustomer {
+/**
+ * Created by Juliana on 10/11/2016.
+ */
+public class DAOCustomerWeb {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/jlvbank";
     private static final String USER = "jsimoni";
@@ -35,68 +38,29 @@ public class DAOCustomer {
         }
     }
 
-    /*return is 0, customer didn't found*/
-    public int selectId(String cpf){
-        int idCustomer = 0;
-        try{
 
-            if(connection == null)
-                prepareConnection();
-
-            String query = "SELECT id FROM customers WHERE cpf = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, cpf);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()){
-                do{
-                    idCustomer = resultSet.getInt("id");
-                }while(resultSet.next());
-            }
-            else{
-                return idCustomer;
-            }
-        }
-        catch (SQLException e){
-            e.getMessage();
-        }
-
-        return idCustomer;
-    }
-
-    public DBOCustomer authenticCustomer (String cpf, String pass){
+    public DBOCustomer searchCustomer(String cpf){
         DBOCustomer dboCustomer = null;
         try{
 
             if(connection == null)
                 prepareConnection();
 
-            String query = "select cust.id,cust.name, cust.cpf, cust.rg, cust.street, city.name, cust.phone," +
-                    "cust.password, cust.income, cust.registration_date, cust.date_birth, cust.status " +
-                    "from customers cust join cities city where city.id = cust.fk_city and cust.cpf = ?" +
-                    "and cust.password = ?";
+            String query = "select cust.name, cust.cpf, cust.rg, city.name, cust.phone," +
+                    "from customers cust join cities city where city.id = cust.fk_city and cust.cpf = ?";
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, cpf);
-            preparedStatement.setString(2, pass);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 dboCustomer = new DBOCustomer();
                 do{
-                    dboCustomer.setId(resultSet.getInt("id"));
                     dboCustomer.setName(resultSet.getString("name"));
                     dboCustomer.setCpf(resultSet.getString("cpf"));
                     dboCustomer.setRg(resultSet.getString("rg"));
-                    dboCustomer.setStreet(resultSet.getString("street"));
                     dboCustomer.setCity(resultSet.getString("city.name"));
                     dboCustomer.setPhone(resultSet.getString("phone"));
-                    dboCustomer.setPassword(resultSet.getString("password"));
-                    dboCustomer.setIncome(resultSet.getDouble("income"));
-                    dboCustomer.setRegistrationDate(resultSet.getDate("registration_date"));
-                    dboCustomer.setDateBirth(resultSet.getDate("date_birth"));
-                    dboCustomer.setStatus(resultSet.getBoolean("status"));
 
                 }while(resultSet.next());
             }
@@ -104,7 +68,7 @@ public class DAOCustomer {
                 return null;
             }
         }
-        catch (SQLException e) {
+        catch (SQLException e){
             e.getMessage();
         }
         return dboCustomer;

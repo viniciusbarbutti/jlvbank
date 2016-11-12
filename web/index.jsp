@@ -64,14 +64,14 @@
                 <div class = "background-table">
                     <table class="sortable">
                         <thead class="header text_b">
-                        <tr>
-                            <th data-field="id">Nome</th>
-                            <th data-field="cpf">CPF</th>
-                            <th data-field="rg">RG</th>
-                            <th data-field="cidade">Cidade</th>
-                            <th data-field="telefone">Telefone</th>
-                            <th data-field="email">Email</th>
-                        </tr>
+                            <tr>
+                                <th data-field="id">Nome</th>
+                                <th data-field="cpf">CPF</th>
+                                <th data-field="rg">RG</th>
+                                <th data-field="cidade">Cidade</th>
+                                <th data-field="telefone">Telefone</th>
+                                <th data-field="email">Email</th>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -109,7 +109,7 @@
 
 <!-- PARALLAX -->
 <div class="parallax-container">
-    <div class="parallax"><img src="img/parallax1.png"></div>
+    <div class="parallax"><img src="modulo_web/img/parallax1.png"></div>
 </div>
 
 <!-- CADASTRO -->
@@ -179,7 +179,7 @@
 
 <!-- PARALLAX -->
 <div class="parallax-container">
-    <div class="parallax"><img src="img/parallax1.png"></div>
+    <div class="parallax"><img src="modulo_web/img/parallax1.png"></div>
 </div>
 <!--Team-->
 <div class="section scrollspy" id="team">
@@ -189,7 +189,7 @@
             <div class="col s12 m3">
                 <div class="card card-avatar">
                     <div class="waves-effect waves-block waves-light">
-                        <img class="activator" src="img/avatar1.png">
+                        <img class="activator" src="modulo_web/img/avatar1.png">
                     </div>
                     <div class="card-content">
 		                        <span class="card-title activator grey-text text-darken-4">Leoni Murilo <br/>
@@ -200,7 +200,7 @@
             <div class="col s12 m3">
                 <div class="card card-avatar">
                     <div class="waves-effect waves-block waves-light">
-                        <img class="activator" src="img/avatar2.png">
+                        <img class="activator" src="modulo_web/img/avatar2.png">
                     </div>
                     <div class="card-content">
 		                        <span class="card-title activator grey-text text-darken-4">Juliana<br/>
@@ -212,7 +212,7 @@
             <div class="col s12 m3">
                 <div class="card card-avatar">
                     <div class="waves-effect waves-block waves-light">
-                        <img class="activator" src="img/avatar3.png">
+                        <img class="activator" src="modulo_web/img/avatar3.png">
                     </div>
                     <div class="card-content">
 		                        <span class="card-title activator grey-text text-darken-4">Vinicius Barbutti<br/>
@@ -236,7 +236,5 @@
 <script src="modulo_web/min/plugin-min.js"></script>
 <script src="modulo_web/min/custom-min.js"></script>
 <script src="modulo_web/js/sortable.js"></script>
-<script src="modulo_web/js/funcoes.js"></script>
-$END$
 </body>
 </html>

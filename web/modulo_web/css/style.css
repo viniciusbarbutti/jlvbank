@@ -58,6 +58,8 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 
 .text_b{color: #2196F3;}
 
+.text_c{font-size: small;}
+
 .in{font-weight: 400 !important; font-style: normal !important;}
 
 .promo i {
@@ -262,10 +264,7 @@ nav a.button-collapse {
     line-height: 30px !important;
 }
 
-.parallax-container {
-    max-height: 400px;
-}
-
+parallax
 footer.page-footer {
     margin-top: 0px !important;
 }

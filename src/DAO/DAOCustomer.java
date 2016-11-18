@@ -110,4 +110,77 @@ public class DAOCustomer {
         }
         return dboCustomer;
     }
+
+    public DBOCustomer dataCustomer (String cpf){
+        DBOCustomer dboCustomer = null;
+        try{
+
+            if(connection == null)
+                prepareConnection();
+
+            String query = "select cust.name, cust.cpf, cust.rg, city.name, cust.phone from customers cust join cities city where city.id = cust.fk_city and cust.cpf = ?";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, cpf);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                dboCustomer = new DBOCustomer();
+                do{
+                    dboCustomer.setName(resultSet.getString("name"));
+                    dboCustomer.setCpf(resultSet.getString("cpf"));
+                    dboCustomer.setRg(resultSet.getString("rg"));
+                    dboCustomer.setCity(resultSet.getString("city.name"));
+                    dboCustomer.setPhone(resultSet.getString("phone"));
+
+                }while(resultSet.next());
+            }
+            else{
+                return null;
+            }
+        }
+        catch (SQLException e) {
+            e.getMessage();
+        }
+        return dboCustomer;
+    }
+
+    public DBOCustomer detailCustomer (String cpf){
+        DBOCustomer dboCustomer = null;
+        try{
+
+            if(connection == null)
+                prepareConnection();
+
+            String query = "select cust.name, cust.cpf, cust.rg, city.name, cust.street, cust.phone, cust.income, cust.date_birth from customers cust\n" +
+                    "join cities city where city.id = cust.fk_city and cust.cpf = ?";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, cpf);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                dboCustomer = new DBOCustomer();
+                do{
+                    dboCustomer.setName(resultSet.getString("name"));
+                    dboCustomer.setCpf(resultSet.getString("cpf"));
+                    dboCustomer.setRg(resultSet.getString("rg"));
+                    dboCustomer.setCity(resultSet.getString("city.name"));
+                    dboCustomer.setStreet(resultSet.getString("street"));
+                    dboCustomer.setPhone(resultSet.getString("phone"));
+                    dboCustomer.setIncome(resultSet.getDouble("income"));
+                    dboCustomer.setDateBirth(resultSet.getDate("date_birth"));
+
+                }while(resultSet.next());
+            }
+            else{
+                return null;
+            }
+        }
+        catch (SQLException e) {
+            e.getMessage();
+        }
+        return dboCustomer;
+    }
+
 }

@@ -47,14 +47,14 @@
 
 <!-- SEARCH -->
 <div id="search" class="section scrollspy">
-
     <div class="row">
         <div class="container">
             <h5 class="header text_b"> Pesquisa Clientes: </h5>
             <form method="post" action="DetailCustomersWeb">
+                <label id="erroBuscaCpf" name="erroBuscaCpf"> ${erroBuscaCpf != null ? erroBuscaCpf : ''}</label>
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="cpf_pesquisa" type="number" class="validate" name="cpf" id="cpf">
+                        <input id="cpf_pesquisa" type="text" class="validate" name="cpf" id="cpf" maxlength="14" minlength="14" onKeyPress="return Apenas_Numeros(event);" onkeyup="maskCPF(this)";>
                         <label for="cpf">CPF:</label>
                     </div>
                     <button class="btn waves-effect waves-light" type="submit">Pesquisar</button>
@@ -62,8 +62,8 @@
 
                 <div>
                     <table class="sortable">
-                        <thead class="header text_b">
-                        <tr>
+                        <thead class="header text_b" >
+                        <tr ${name != null ? name : ''}>
                             <th data-field="name">Nome</th>
                             <th data-field="cpf">CPF</th>
                             <th data-field="rg" style="display:none">RG</th>
@@ -77,8 +77,8 @@
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td name="name"> ${name != null ? name : ''}</td>
+                        <tr >
+                            <td name="name"> ${name != null ? name : ''.toString()}</td>
                             <td name="cpf">${cpf != null ? cpf : ''}</td>
                             <td name="rg" style="display:none">${rg != null ? rg : ''}</td>
                             <td name="aniversario" style="display:none">${aniversario != null ? aniversario : ''}</td>
@@ -98,6 +98,22 @@
                 <div id="modal1" class="modal" style="width: 90%; height: 30%;">
                     <div class="modal-content" style="width: 90%; height: 30%;">
                         <h4>Detalhes</h4>
+                    </div>
+                    <div class="modal-header">
+                        <div class="modal-content" style="width: 90%; height: 30%;">
+                            <td><th data-field="name">Nome</th></td>
+                            <td name="name"> ${name != null ? name : ''}</td>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <select>
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="3">Option 3</option>
+                            </select>
+                            <label>Materialize Select</label>
+                        </div>
                     </div>
                     <div class="modal-footer">
                             <table class="sortable">
@@ -142,63 +158,57 @@
 </div>
 
 <!-- CADASTRO -->
-<div id="intro" class="section scrollspy">
+<div id="insert" class="section scrollspy">
 
     <div class="row">
         <div class="container">
             <h5 class="header text_b"> Dados para Cadastro </h5>
-            <form class="col s12">
+
+            <label id="erro" name="erro"> ${erro != null ? erro : ''}</label>
+            <form class="col s12" method="post" action="InsertCustomerWeb">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="complete_name" type="text" class="validate">
+                        <input id="complete_name" name="complete_name" type="text" class="validate" required="required">
                         <label for="complete_name">Nome Completo:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="cpfInput" type="number" class="validate">
-                        <label for="cpfInput">CPF:</label>
+                        <input id="cpf_insert" type="text" class="validate" name="cpf_insert" maxlength="14" minlength="14" required="required" onKeyPress="return Apenas_Numeros(event);" onkeyup="maskCPF(this)";>
+                        <label for="cpf_insert">CPF:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="rg" type="number" class="validate">
+                        <input id="rg" type="text" class="validate" name="rg" id="rg" required="required" maxlength="12" minlength="12" onKeyPress="return Apenas_Numeros(event);" onkeyup="maskRG(this)";>
                         <label for="rg">RG:</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="address" type="text" class="validate">
+                        <input id="address" name="address" type="text" class="validate" required="required">
                         <label for="address">Endereço:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="city" type="text" class="validate">
-                        <label for="city">Cidade:</label>
+                        <input id="autocomplete-input" name="city" type="text" class="autocomplete" required="required">
+                        <label for="autocomplete-input">Cidade:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="state" type="text" class="validate">
-                        <label for="state">Estado:</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="email" type="email" class="validate">
-                        <label for="email">E-mail:</label>
-                    </div>
-                    <div class="input-field col s3">
-                        <input id="password" type="password" class="validate">
+                        <input id="password" name="password" type="password" class="validate" required="required">
                         <label for="password">Senha:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="confirm_password" type="password" class="validate">
+                        <input id="confirm_password" name="confirm_password" type="password" class="validate" required="required">
                         <label for="confirm_password">Confirme a senha:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="telephone" type="tel" class="validate">
+                        <input id="telephone" name="telephone" type="tel" class="validate" maxlength="13" minlength="12" required="required" onkeypress="mascara(this, '## ####-####')">
                         <label for="telephone">Telefone:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="datepicker datepicker--input__focused" type="text" class="datepicker">
+                        <input id="datepicker datepicker--input__focused" name="date_birth"type="text" class="datepicker" required="required">
                         <label for="datepicker datepicker--input__focused">Data de Nascimento:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="renda" type="number" class="validate">
-                        <label for="renda">Renda:</label>
+                        <input id="income" name="income" type="number" class="validate" required="required">
+                        <label for="income">Renda:</label>
                     </div>
                     <div>
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Inserir</button>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Inserir Usuário</button>
                     </div>
                 </div>
             </form>
@@ -210,6 +220,33 @@
 <div class="parallax-container">
     <div class="parallax"><img src="modulo_web/img/parallax1.png"></div>
 </div>
+
+<!-- Excluir Usuário -->
+<div id="delete" class="section scrollspy">
+
+    <div class="row">
+        <div class="container">
+            <h5 class="header text_b"> Excluir Usuário </h5>
+            <label id="erro_delete" name="erro_delete"> ${erro_delete != null ? erro_delete : ''}</label>
+            <form class="col s12" method="post" action="DeleteCustomerWeb">
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input id="cpf_delete" type="text" class="validate" name="cpf_delete" maxlength="14" minlength="14" required="required" onKeyPress="return Apenas_Numeros(event);" onkeyup="maskCPF(this)";>
+                        <label for="cpf_delete">CPF:</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="password_delete" name="password_delete" type="password" class="validate" required="required">
+                        <label for="password_delete">Senha:</label>
+                    </div>
+                    <div>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Excluir Usuário</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!--Team-->
 <div class="section scrollspy" id="team">
     <div class="container">
@@ -261,10 +298,68 @@
         </div>
     </div>
 </footer>
+
+
+
+
+<!-- Validações dos campos-->
+<script language=javascript>
+    function Apenas_Numeros(caracter){
+        var nTecla = 0;
+        if (document.all) {
+            nTecla = caracter.keyCode;
+        }else {
+            nTecla = caracter.which;
+        }
+        if ((nTecla> 47 && nTecla <58)
+                || nTecla == 8 || nTecla == 127
+                || nTecla == 0 || nTecla == 9  // 0 == Tab
+                || nTecla == 13) { // 13 == Enter
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function maskCPF(CPF) {
+        var evt = window.event;
+        kcode=evt.keyCode;
+        if ((kcode == 8) || (kcode == 9)) return;
+        if (CPF.value.length == 3) { CPF.value = CPF.value + '.'; }
+        if (CPF.value.length == 7) { CPF.value = CPF.value + '.'; }
+        if (CPF.value.length == 11) { CPF.value = CPF.value + '-'; }
+    }
+
+    function maskRG(RG) {
+        var evt = window.event;
+        kcode=evt.keyCode;
+        if ((kcode == 8) || (kcode == 9)) return;
+        if (RG.value.length == 2) { RG.value = RG.value + '.'; }
+        if (RG.value.length == 6) { RG.value = RG.value + '.'; }
+        if (RG.value.length == 10) { RG.value = RG.value + '-'; }
+    }
+    function mascara(t, mask){
+        var i = t.value.length;
+        var saida = mask.substring(1,0);
+        var texto = mask.substring(i)
+        if (texto.substring(0,1) != saida){
+            t.value += texto.substring(0,1);
+        }
+    }
+
+
+</script>
+
 <!--  Scripts-->
 <script src="modulo_web/min/plugin-min.js"></script>
 <script src="modulo_web/min/custom-min.js"></script>
 <script src="modulo_web/js/sortable.js"></script>
 <script src="modulo_web/js/funcoes.js"></script>
+<script src="modulo_web/js/index.js"></script>
+<script src="modulo_web/js/init.js"></script>
+<script src="modulo_web/js/jquery.js"></script>
+<script src="modulo_web/js/jquery-2.1.1.min.js"></script>
+<script src="modulo_web/js/materialize.js"></script>
+<script src="modulo_web/js/materialize.min.js"></script>
 </body>
 </html>

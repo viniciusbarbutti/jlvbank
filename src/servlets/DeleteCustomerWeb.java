@@ -1,9 +1,9 @@
 package servlets;
 
+import Common.Commons;
 import DAO.DAOCustomer;
 import DBO.DBOCustomer;
 import com.google.gson.Gson;
-import Common.Commons;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,34 +15,38 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by Juliana on 13/11/2016.
+ * Created by Juliana on 20/11/2016.
  */
-@WebServlet(name = "Servlet AuthenticationWeb", urlPatterns = {"/AuthenticationWeb"})
-public class AuthenticationWeb extends HttpServlet{
+
+@WebServlet(name = "DeleteCustomerWeb", urlPatterns = {"/DeleteCustomerWeb"})
+public class DeleteCustomerWeb extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             PrintWriter out = response.getWriter();
             response.setHeader("Content-Type", "application/json");
             Commons commons = new Commons();
-            String cpf = commons.removeMask(request.getParameter("cpf"));
-            String password = request.getParameter("password");
+            String cpf = commons.removeMask(request.getParameter("cpf_delete"));
+            String password = request.getParameter("password_delete");
 
             if((cpf == null) || (password == null)){
-                request.setAttribute("erro", "Por favor, preencha todos os campos");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+                request.setAttribute("erro_delete", "Por favor, preencha todos os campos!");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }
 
             DAOCustomer daoCustomer = new DAOCustomer();
-            boolean answer = daoCustomer.authenticCustomerRequest(cpf, password);
 
-            if(answer){
+            if (daoCustomer.validateCustomer(cpf, password).equals(0)) {
+                request.setAttribute("erro_delete", "Usuário já foi excluído!");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
+
             }
             else{
-                request.setAttribute("erro", "CPF ou senha inválida!");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+                daoCustomer.deleteCustomer(cpf, password);
+
+                request.setAttribute("erro_delete", "Usuário excluído com sucesso!");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }
 
@@ -50,11 +54,4 @@ public class AuthenticationWeb extends HttpServlet{
             e.getStackTrace();
         }
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("etc/error.jsp");
-    }
-
 }
-
-

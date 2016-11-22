@@ -21,18 +21,18 @@ public class BlockCard extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setHeader("Content-Type", "application/json");
 
-            String cpf = request.getHeader("cpf");
+            String cpf = request.getParameter("cpf");
             if (cpf == null) {
                 out.print(1001);
                 return ;
             }
 
-            String password = request.getHeader("password");
+            String password = request.getParameter("password");
             if (password == null) {
                 out.print(1001);
                 return ;
             }
-            String number = request.getHeader("number");
+            String number = request.getParameter("number");
             if (number == null) {
                 out.print(1001);
                 return ;

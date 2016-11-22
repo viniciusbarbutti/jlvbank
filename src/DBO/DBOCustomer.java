@@ -1,6 +1,6 @@
 package DBO;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class DBOCustomer {
     private int id;

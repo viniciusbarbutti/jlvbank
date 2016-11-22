@@ -23,13 +23,13 @@ public class Invoices extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setHeader("Content-Type", "application/json");
 
-            String cpf = request.getHeader("cpf");
+            String cpf = request.getParameter("cpf");
             if (cpf == null) {
                 out.print(1001);
                 return ;
             }
 
-            String password = request.getHeader("password");
+            String password = request.getParameter("password");
             if (password == null) {
                 out.print(1001);
                 return ;
@@ -41,7 +41,7 @@ public class Invoices extends HttpServlet {
                 out.print(1001);
                 return ;
             }
-            String numberCard = request.getHeader("numberCard");
+            String numberCard = request.getParameter("numberCard");
 
             DAOInvoice daoInvoice = new DAOInvoice();
             ArrayList<DBOInvoice> invoices = daoInvoice.selectInvoices(numberCard);

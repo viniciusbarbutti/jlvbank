@@ -9,7 +9,7 @@ body{
 
 #erro{
     font-family:'Open Sans',sans-serif;
-    color:#C62828;
+    color:#039be5;
     font-weight: bold;
     line-height: 3;
     width: 100%;
@@ -59,8 +59,12 @@ body{
   font-weight:300;
   text-align:center;
   color:#fff;
-  background-image: url("../../modulo_web/img/login.png");
   
+}
+
+#fundo_login{
+  background-image: url("../../modulo_web/img/parallax1.png");
+  background-size:cover;
 }
 
 

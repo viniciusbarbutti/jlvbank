@@ -183,4 +183,98 @@ public class DAOCustomer {
         return dboCustomer;
     }
 
+    public Long searchIdCity (String name){
+        Long id = null;
+        try{
+            if(connection == null)
+                prepareConnection();
+
+            String query = "select id from cities where name = ?";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            id = resultSet.getLong("id");
+
+        }
+        catch (SQLException e) {
+            e.getMessage();
+        }
+        return id;
+    }
+
+    public void insertCustomers (DBOCustomer dboCustomer){
+        Long id = null;
+        try{
+            if(connection == null)
+                prepareConnection();
+
+            id = searchIdCity(dboCustomer.getCity());
+
+            String query = "INSERT INTO jlvbank.customers(name, cpf, rg, street, fk_city, phone, password, income, registration_date, date_birth, status)" +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?, 1);";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, dboCustomer.getName());
+            preparedStatement.setString(2, dboCustomer.getCpf());
+            preparedStatement.setString(3, dboCustomer.getRg());
+            preparedStatement.setString(4, dboCustomer.getStreet());
+            preparedStatement.setLong(5, id);
+            preparedStatement.setString(6, dboCustomer.getPhone());
+            preparedStatement.setString(7, dboCustomer.getPassword());
+            preparedStatement.setDouble(8, dboCustomer.getIncome());
+            preparedStatement.setDate(9,dboCustomer.getDateBirth());
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+        }
+        catch (SQLException e) {
+            e.getMessage();
+        }
+    }
+
+    public void deleteCustomer(String cpf, String password){
+        try{
+            if(connection == null)
+                prepareConnection();
+
+            String query = "UPDATE customers SET status = 0 where cpf = ? and password = ?;";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, cpf);
+            preparedStatement.setString(2, password);
+
+            System.out.print(query);
+
+            preparedStatement.executeUpdate();
+            connection.close();
+
+        }catch(SQLException e){
+            e.getMessage();
+        }
+    }
+
+    public Long validateCustomer(String cpf, String password){
+        Long status = null;
+        try{
+            if(connection == null)
+                prepareConnection();
+
+            String query = "select status from customers cust where cpf = ? and password = ?;";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, cpf);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            status = resultSet.getLong("status");
+
+            preparedStatement.execute();
+            connection.close();
+
+        }catch(SQLException e){
+            e.getMessage();
+        }
+        return status;
+    }
 }

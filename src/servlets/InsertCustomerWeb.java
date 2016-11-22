@@ -15,38 +15,40 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by Juliana on 13/11/2016.
+ * Created by Juliana on 19/11/2016.
  */
 
-@WebServlet(name = "DetailCustomersWeb", urlPatterns = {"/DetailCustomersWeb"})
-public class DetailCustomerWeb extends HttpServlet {
+@WebServlet(name = "InsertCustomerWeb", urlPatterns = {"/InsertCustomerWeb"})
+public class InsertCustomerWeb extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             PrintWriter out = response.getWriter();
             response.setHeader("Content-Type", "application/json");
-            Commons commons = new Commons();
-            String cpf = commons.removeMask(request.getParameter("cpf"));
 
+            Commons commons = new Commons();
             DBOCustomer customer = new DBOCustomer();
             DAOCustomer daoCustomer = new DAOCustomer();
-            customer = daoCustomer.detailCustomer(cpf);
 
-            if(customer == null){
-                request.setAttribute("erroBuscaCpf", "CPF inexistente!");
+            String senhaConfirmada = request.getParameter("confirm_password");
+
+            if(!(request.getParameter("password").equals(senhaConfirmada))){
+                request.setAttribute("erro", "As senha devem ser iguais!");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }
 
-            Gson gson = new Gson();
+            customer.setName(request.getParameter("complete_name"));
+            customer.setCpf(commons.removeMask(request.getParameter("cpf_insert")));
+            customer.setRg(commons.removeMask(request.getParameter("rg")));
+            customer.setStreet( request.getParameter("address"));
+            customer.setCity(request.getParameter("city"));
+            customer.setPassword(request.getParameter("password"));
+            customer.setPhone(request.getParameter("telephone"));
+            customer.setDateBirth(commons.formataData(request.getParameter("date_birth")));
+            customer.setIncome(Double.parseDouble(request.getParameter("income")));
 
-            request.setAttribute("name", gson.toJson(customer.getName()));
-            request.setAttribute("cpf", gson.toJson(customer.getCpf()));
-            request.setAttribute("rg", gson.toJson(customer.getRg()));
-            request.setAttribute("cidade", gson.toJson(customer.getCity()));
-            request.setAttribute("endereco", gson.toJson(customer.getStreet()));
-            request.setAttribute("telefone", gson.toJson(customer.getPhone()));
-            request.setAttribute("salario", gson.toJson(customer.getIncome()));
-            request.setAttribute("aniversario", gson.toJson(customer.getDateBirth()));
+
+            daoCustomer.insertCustomers(customer);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
             dispatcher.forward(request, response);

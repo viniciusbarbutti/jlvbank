@@ -60,6 +60,19 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 
 .text_c{font-size: small;}
 
+.button_position{
+    left: 40px;
+    top: 20px;
+}
+
+.erro{
+    font-family:'Open Sans',sans-serif;
+    color:#039be5;
+    font-weight: bold;
+    line-height: 3;
+    width: 100%;
+}
+
 .in{font-weight: 400 !important; font-style: normal !important;}
 
 .promo i {

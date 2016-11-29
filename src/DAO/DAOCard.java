@@ -59,8 +59,9 @@ public class DAOCard {
 
             if(resultSet.next()){
                 cards = new ArrayList<>();
-                DBOCard dboCard = new DBOCard();
+                DBOCard dboCard;
                 do{
+                    dboCard = new DBOCard();
                     dboCard.setId(resultSet.getInt("id"));
                     dboCard.setNumber(resultSet.getString("num"));
                     dboCard.setSecurityNumber(resultSet.getString("security_num"));
@@ -75,11 +76,13 @@ public class DAOCard {
                 }while (resultSet.next());
 
             }else
+                disposeConnection();
                 return cards;
 
         }catch (Exception e){
             e.printStackTrace();
         }
+        disposeConnection();
         return  cards;
     }
 
@@ -98,11 +101,13 @@ public class DAOCard {
 
             int i = preparedStatement.executeUpdate();
             if(i > 0)
+                disposeConnection();
                 return true;
 
         }catch (Exception e){
             e.printStackTrace();
         }
+        disposeConnection();
         return false;
     }
 
@@ -120,15 +125,19 @@ public class DAOCard {
 
             if(resultSet.next()){
                 if(resultSet.getBoolean("status"))
+                    disposeConnection();
                     return true;
                 else
+                    disposeConnection();
                     return false;
             }
+                disposeConnection();
                 return false;
 
         }catch (Exception e){
             e.printStackTrace();
         }
+        disposeConnection();
         return false;
     }
 }

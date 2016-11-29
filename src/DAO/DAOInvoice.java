@@ -70,12 +70,13 @@ public class DAOInvoice {
                 }while(resultSet.next());
 
             }else
+                disposeConnection()
                 return releases;
 
         }catch (Exception e){
             e.getStackTrace();
         }
-
+        disposeConnection()
         return releases;
     }
 
@@ -114,12 +115,13 @@ public class DAOInvoice {
                     invoices.add(dboInvoice);
                 }while (resultSet.next());
             }else
+                disposeConnection()
                 return invoices;
 
         }catch (Exception e) {
             e.getStackTrace();
         }
-
+        disposeConnection()
         return invoices;
     }
 }

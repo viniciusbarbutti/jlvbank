@@ -51,7 +51,7 @@ public class Invoices extends HttpServlet {
                 return ;
             }
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             out.print(gson.toJson(invoices));
 
         } catch (Exception e) {

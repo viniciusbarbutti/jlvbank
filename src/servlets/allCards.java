@@ -4,6 +4,7 @@ import DAO.DAOCard;
 import DAO.DAOCustomer;
 import DBO.DBOCard;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +49,7 @@ public class allCards extends HttpServlet {
                 out.print(1002);
                 return ;
             }
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             out.print(gson.toJson(cards));
 
         } catch (Exception e) {

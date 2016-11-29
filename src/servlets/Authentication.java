@@ -47,7 +47,7 @@ public class Authentication extends HttpServlet {
                 return ;
             }
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             out.print(gson.toJson(dboCustomer));
 
         } catch (Exception e) {

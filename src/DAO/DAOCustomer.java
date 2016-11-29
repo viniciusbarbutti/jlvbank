@@ -52,17 +52,20 @@ public class DAOCustomer {
 
             if(resultSet.next()){
                 if(resultSet.getInt("count(*)") == 1)
+                    disposeConnection();
                     return true;
                 else
+                    disposeConnection();
                     return false;
             }else{
+                disposeConnection();
                 return false;
             }
         }
         catch (SQLException e){
             e.getMessage();
         }
-
+        disposeConnection();
         return false;
     }
 
@@ -102,12 +105,14 @@ public class DAOCustomer {
                 }while(resultSet.next());
             }
             else{
+                disposeConnection();
                 return null;
             }
         }
         catch (SQLException e) {
             e.getMessage();
         }
+        disposeConnection();
         return dboCustomer;
     }
 
@@ -136,12 +141,14 @@ public class DAOCustomer {
                 }while(resultSet.next());
             }
             else{
+                disposeConnection();
                 return null;
             }
         }
         catch (SQLException e) {
             e.getMessage();
         }
+        disposeConnection();
         return dboCustomer;
     }
 
@@ -174,12 +181,14 @@ public class DAOCustomer {
                 }while(resultSet.next());
             }
             else{
+                disposeConnection();
                 return null;
             }
         }
         catch (SQLException e) {
             e.getMessage();
         }
+        disposeConnection();
         return dboCustomer;
     }
 
@@ -201,6 +210,7 @@ public class DAOCustomer {
         catch (SQLException e) {
             e.getMessage();
         }
+        disposeConnection();
         return id;
     }
 
@@ -281,7 +291,7 @@ public class DAOCustomer {
 
             preparedStatement.executeUpdate();
             connection.close();
-
+            
         }catch(SQLException e){
             e.getMessage();
         }

@@ -235,17 +235,49 @@ public class DAOCustomer {
         }
     }
 
-    public void deleteCustomer(String cpf, String password){
-        try{
-            if(connection == null)
+    public Boolean validateCustomer(String cpf, String password) {
+        Boolean status = null;
+        try {
+            if (connection == null)
                 prepareConnection();
 
-            String query = "UPDATE customers SET status = 0 where cpf = ? and password = ?;";
+            String query = "select status from customers where cpf = ? and password = ?;";
             preparedStatement = connection.prepareStatement(query);
+
             preparedStatement.setString(1, cpf);
             preparedStatement.setString(2, password);
 
-            System.out.print(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+         if (resultSet.first()) {
+            status = resultSet.getBoolean("status");
+        }
+
+
+        }catch(SQLException e){
+            e.getMessage();
+        }
+        finally {
+            try{
+                connection.close();
+            }
+            catch(Exception e){
+
+            }
+        }
+        return status;
+    }
+
+    public void desativaCartao(String cartao, String securityNum){
+        try{
+            if(connection == null)
+                prepareConnection();
+            // 1 é bloqueado
+            String query = "UPDATE cards SET status = 1 where num = ? and password = ?;";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, cartao);
+            preparedStatement.setString(2, securityNum);
 
             preparedStatement.executeUpdate();
             connection.close();
@@ -253,28 +285,5 @@ public class DAOCustomer {
         }catch(SQLException e){
             e.getMessage();
         }
-    }
-
-    public Long validateCustomer(String cpf, String password){
-        Long status = null;
-        try{
-            if(connection == null)
-                prepareConnection();
-
-            String query = "select status from customers cust where cpf = ? and password = ?;";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, cpf);
-            preparedStatement.setString(2, password);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            status = resultSet.getLong("status");
-
-            preparedStatement.execute();
-            connection.close();
-
-        }catch(SQLException e){
-            e.getMessage();
-        }
-        return status;
     }
 }

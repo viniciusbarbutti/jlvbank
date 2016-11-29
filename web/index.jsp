@@ -99,22 +99,6 @@
                     <div class="modal-content" style="width: 90%; height: 30%;">
                         <h4>Detalhes</h4>
                     </div>
-                    <div class="modal-header">
-                        <div class="modal-content" style="width: 90%; height: 30%;">
-                            <td><th data-field="name">Nome</th></td>
-                            <td name="name"> ${name != null ? name : ''}</td>
-                        </div>
-
-                        <div class="input-field col s12">
-                            <select>
-                                <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                            <label>Materialize Select</label>
-                        </div>
-                    </div>
                     <div class="modal-footer">
                             <table class="sortable">
                                 <thead class="header text_b">
@@ -221,25 +205,25 @@
     <div class="parallax"><img src="modulo_web/img/parallax1.png"></div>
 </div>
 
-<!-- Excluir Usuário -->
+<!-- Cancelar Cartão -->
 <div id="delete" class="section scrollspy">
 
     <div class="row">
         <div class="container">
-            <h5 class="header text_b"> Excluir Usuário </h5>
+            <h5 class="header text_b"> Cancelar Cartão </h5>
             <label id="erro_delete" name="erro_delete"> ${erro_delete != null ? erro_delete : ''}</label>
             <form class="col s12" method="post" action="DeleteCustomerWeb">
                 <div class="row">
                     <div class="input-field col s3">
-                        <input id="cpf_delete" type="text" class="validate" name="cpf_delete" maxlength="14" minlength="14" required="required" onKeyPress="return Apenas_Numeros(event);" onkeyup="maskCPF(this)";>
-                        <label for="cpf_delete">CPF:</label>
+                        <input id="cartao" type="text" class="validate" name="cartao" required="required" onKeyPress="return Apenas_Numeros(event);">
+                        <label for="cartao">Cartão:</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="password_delete" name="password_delete" type="password" class="validate" required="required">
-                        <label for="password_delete">Senha:</label>
+                        <input id="password" name="password" type="password" class="validate" required="required">
+                        <label for="password">Senha:</label>
                     </div>
                     <div>
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Excluir Usuário</button>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Cancelar Cartão</button>
                     </div>
                 </div>
             </form>

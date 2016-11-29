@@ -29,14 +29,6 @@ public class InsertCustomerWeb extends HttpServlet {
             DBOCustomer customer = new DBOCustomer();
             DAOCustomer daoCustomer = new DAOCustomer();
 
-            String senhaConfirmada = request.getParameter("confirm_password");
-
-            if(!(request.getParameter("password").equals(senhaConfirmada))){
-                request.setAttribute("erro", "As senha devem ser iguais!");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-                dispatcher.forward(request, response);
-            }
-
             customer.setName(request.getParameter("complete_name"));
             customer.setCpf(commons.removeMask(request.getParameter("cpf_insert")));
             customer.setRg(commons.removeMask(request.getParameter("rg")));

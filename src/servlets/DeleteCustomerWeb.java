@@ -25,10 +25,10 @@ public class DeleteCustomerWeb extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setHeader("Content-Type", "application/json");
             Commons commons = new Commons();
-            String cpf = commons.removeMask(request.getParameter("cpf_delete"));
-            String password = request.getParameter("password_delete");
+            String cartao = commons.removeMask(request.getParameter("cartao"));
+            String securityNum = request.getParameter("password");
 
-            if((cpf == null) || (password == null)){
+            if((cartao == null) || (securityNum == null)){
                 request.setAttribute("erro_delete", "Por favor, preencha todos os campos!");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
@@ -36,19 +36,11 @@ public class DeleteCustomerWeb extends HttpServlet {
 
             DAOCustomer daoCustomer = new DAOCustomer();
 
-            if (daoCustomer.validateCustomer(cpf, password).equals(0)) {
-                request.setAttribute("erro_delete", "Usuário já foi excluído!");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-                dispatcher.forward(request, response);
+            daoCustomer.desativaCartao(cartao, securityNum);
+            request.setAttribute("erro_delete", "Usuário excluído com sucesso!");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
 
-            }
-            else{
-                daoCustomer.deleteCustomer(cpf, password);
-
-                request.setAttribute("erro_delete", "Usuário excluído com sucesso!");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-                dispatcher.forward(request, response);
-            }
 
         } catch (Exception e) {
             e.getStackTrace();
